@@ -14,6 +14,7 @@
 		EC54AD282F4BBEED00F437A4 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC54AD272F4BBEEB00F437A4 /* AddExpenseView.swift */; };
 		EC54AD2A2F4BBF1900F437A4 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC54AD292F4BBF0F00F437A4 /* DashboardView.swift */; };
 		EC54AD2C2F4BC1E100F437A4 /* FinanceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC54AD2B2F4BC1D100F437A4 /* FinanceCalculator.swift */; };
+		EC54AD3B2F4BC96F00F437A4 /* DateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC54AD3A2F4BC96900F437A4 /* DateFilter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		EC54AD292F4BBF0F00F437A4 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		EC54AD2B2F4BC1D100F437A4 /* FinanceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceCalculator.swift; sourceTree = "<group>"; };
 		EC54AD312F4BC21400F437A4 /* NailPayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NailPayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC54AD3A2F4BC96900F437A4 /* DateFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -72,6 +74,7 @@
 		EC54AD082F4BBDF100F437A4 = {
 			isa = PBXGroup;
 			children = (
+				EC54AD3A2F4BC96900F437A4 /* DateFilter.swift */,
 				EC54AD2B2F4BC1D100F437A4 /* FinanceCalculator.swift */,
 				EC54AD292F4BBF0F00F437A4 /* DashboardView.swift */,
 				EC54AD272F4BBEEB00F437A4 /* AddExpenseView.swift */,
@@ -204,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC54AD202F4BBE3000F437A4 /* Models.swift in Sources */,
+				EC54AD3B2F4BC96F00F437A4 /* DateFilter.swift in Sources */,
 				EC54AD2A2F4BBF1900F437A4 /* DashboardView.swift in Sources */,
 				EC54AD262F4BBED300F437A4 /* ExpensesView.swift in Sources */,
 				EC54AD282F4BBEED00F437A4 /* AddExpenseView.swift in Sources */,
