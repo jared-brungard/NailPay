@@ -19,6 +19,9 @@ struct DashboardView: View {
         guard let start, let end else { return expenses }
         return expenses.filter { $0.date >= start && $0.date < end }
     }
+    @Environment(\.modelContext) private var modelContext
+    @State private var importMessage: String?
+
     
     
     var incomeTotal: Double {
@@ -66,6 +69,25 @@ struct DashboardView: View {
 
                     row("Set aside", taxSetAside)
                 }
+                Section("Demo Data") {
+                    Button("Load Demo Data (CSV)") {
+                        do {
+                            try CSVImporter.importAppointments(modelContext: modelContext)
+                            try CSVImporter.importExpenses(modelContext: modelContext)
+                        } catch {
+                            print("Import failed:", error)
+                        }
+                    }
+
+                    Button("Clear All Data") {
+                        do {
+                            try modelContext.delete(model: Appointment.self)
+                            try modelContext.delete(model: Expense.self)
+                        } catch {
+                            print("Clear failed:", error)
+                        }
+                    }
+                }
             }
             .navigationTitle("Dashboard")
         }
@@ -80,3 +102,4 @@ struct DashboardView: View {
         }
     }
 }
+
