@@ -2,7 +2,9 @@ import SwiftUI
 import SwiftData
 
 struct DashboardView: View {
-    @AppStorage("taxRate") private var taxRate: Double = 0.25
+    @AppStorage("taxRate")             private var taxRate: Double = 0.25
+    @AppStorage("paycheckModeEnabled") private var paycheckModeEnabled: Bool = false
+    @AppStorage("paycheckFrequency")   private var paycheckFrequency: String = "biweekly"
 
     @State private var filter: TimeFilter = .month
     @Query private var appointments: [Appointment]
@@ -65,10 +67,42 @@ struct DashboardView: View {
                             .foregroundStyle(.secondary)
                     }
 
-                    Slider(value: $taxRate, in: 0...0.5, step: 0.01)
-
                     row("Set aside", taxSetAside)
                 }
+                if paycheckModeEnabled {
+                    Section("Paycheck") {
+                        let period = PayPeriodHelper.currentPeriod(frequency: paycheckFrequency)
+                        let periodIncome = appointments
+                            .filter { $0.date >= period.start && $0.date <= period.end }
+                            .reduce(0) { $0 + $1.total }
+                        let periodExpenses = expenses
+                            .filter { $0.date >= period.start && $0.date <= period.end }
+                            .reduce(0) { $0 + $1.amount }
+                        let net = periodIncome - periodExpenses
+                        let takeHome = max(0, net) - max(0, net) * taxRate
+
+                        HStack {
+                            Text("Period")
+                            Spacer()
+                            Text("\(period.start, style: .date) – \(period.end, style: .date)")
+                                .foregroundStyle(.secondary)
+                                .font(.subheadline)
+                        }
+                        HStack {
+                            Text("Your Paycheck")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text("$\(takeHome, specifier: "%.2f")")
+                                .fontWeight(.semibold)
+                                .foregroundStyle(takeHome >= 0 ? .green : .red)
+                                .monospacedDigit()
+                        }
+                        NavigationLink("Past Paychecks") {
+                            PastPaychecksView()
+                        }
+                    }
+                }
+
                 Section("Demo Data") {
                     Button("Load Demo Data (CSV)") {
                         do {

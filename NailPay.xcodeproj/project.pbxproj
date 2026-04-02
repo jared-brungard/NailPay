@@ -18,6 +18,13 @@
 		EC54AD4E2F4D3BE300F437A4 /* expenses.csv in Resources */ = {isa = PBXBuildFile; fileRef = EC54AD4D2F4D3BE300F437A4 /* expenses.csv */; };
 		EC54AD4F2F4D3BE300F437A4 /* appointments.csv in Resources */ = {isa = PBXBuildFile; fileRef = EC54AD4C2F4D3BE300F437A4 /* appointments.csv */; };
 		EC54AD512F4D3C0600F437A4 /* CSVImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC54AD502F4D3BFE00F437A4 /* CSVImporter.swift */; };
+		EC863FD82F7ECB15006B82DC /* PaymentTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863FD42F7ECB15006B82DC /* PaymentTypesView.swift */; };
+		EC863FD92F7ECB15006B82DC /* RecurringExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863FD52F7ECB15006B82DC /* RecurringExpensesView.swift */; };
+		EC863FDA2F7ECB15006B82DC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863FD72F7ECB15006B82DC /* SettingsView.swift */; };
+		EC863FDB2F7ECB15006B82DC /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863FD62F7ECB15006B82DC /* SettingsModels.swift */; };
+		EC863FDD2F7ECE34006B82DC /* PaycheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863FDC2F7ECE34006B82DC /* PaycheckView.swift */; };
+		EC863FE02F7ECFDA006B82DC /* PastPaychecksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863FDE2F7ECFDA006B82DC /* PastPaychecksView.swift */; };
+		EC863FE12F7ECFDA006B82DC /* PayPeriodHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC863FDF2F7ECFDA006B82DC /* PayPeriodHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +51,13 @@
 		EC54AD4C2F4D3BE300F437A4 /* appointments.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = appointments.csv; sourceTree = "<group>"; };
 		EC54AD4D2F4D3BE300F437A4 /* expenses.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = expenses.csv; sourceTree = "<group>"; };
 		EC54AD502F4D3BFE00F437A4 /* CSVImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVImporter.swift; sourceTree = "<group>"; };
+		EC863FD42F7ECB15006B82DC /* PaymentTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTypesView.swift; sourceTree = "<group>"; };
+		EC863FD52F7ECB15006B82DC /* RecurringExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringExpensesView.swift; sourceTree = "<group>"; };
+		EC863FD62F7ECB15006B82DC /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
+		EC863FD72F7ECB15006B82DC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		EC863FDC2F7ECE34006B82DC /* PaycheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaycheckView.swift; sourceTree = "<group>"; };
+		EC863FDE2F7ECFDA006B82DC /* PastPaychecksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastPaychecksView.swift; sourceTree = "<group>"; };
+		EC863FDF2F7ECFDA006B82DC /* PayPeriodHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPeriodHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -80,6 +94,13 @@
 		EC54AD082F4BBDF100F437A4 = {
 			isa = PBXGroup;
 			children = (
+				EC863FDE2F7ECFDA006B82DC /* PastPaychecksView.swift */,
+				EC863FDF2F7ECFDA006B82DC /* PayPeriodHelper.swift */,
+				EC863FDC2F7ECE34006B82DC /* PaycheckView.swift */,
+				EC863FD42F7ECB15006B82DC /* PaymentTypesView.swift */,
+				EC863FD52F7ECB15006B82DC /* RecurringExpensesView.swift */,
+				EC863FD62F7ECB15006B82DC /* SettingsModels.swift */,
+				EC863FD72F7ECB15006B82DC /* SettingsView.swift */,
 				EC54AD502F4D3BFE00F437A4 /* CSVImporter.swift */,
 				EC54AD3A2F4BC96900F437A4 /* DateFilter.swift */,
 				EC54AD2B2F4BC1D100F437A4 /* FinanceCalculator.swift */,
@@ -217,7 +238,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC863FDD2F7ECE34006B82DC /* PaycheckView.swift in Sources */,
 				EC54AD512F4D3C0600F437A4 /* CSVImporter.swift in Sources */,
+				EC863FD82F7ECB15006B82DC /* PaymentTypesView.swift in Sources */,
+				EC863FD92F7ECB15006B82DC /* RecurringExpensesView.swift in Sources */,
+				EC863FDA2F7ECB15006B82DC /* SettingsView.swift in Sources */,
+				EC863FDB2F7ECB15006B82DC /* SettingsModels.swift in Sources */,
 				EC54AD202F4BBE3000F437A4 /* Models.swift in Sources */,
 				EC54AD3B2F4BC96F00F437A4 /* DateFilter.swift in Sources */,
 				EC54AD2A2F4BBF1900F437A4 /* DashboardView.swift in Sources */,
@@ -225,6 +251,8 @@
 				EC54AD282F4BBEED00F437A4 /* AddExpenseView.swift in Sources */,
 				EC54AD2C2F4BC1E100F437A4 /* FinanceCalculator.swift in Sources */,
 				EC54AD242F4BBEB200F437A4 /* AddAppointmentView.swift in Sources */,
+				EC863FE02F7ECFDA006B82DC /* PastPaychecksView.swift in Sources */,
+				EC863FE12F7ECFDA006B82DC /* PayPeriodHelper.swift in Sources */,
 				EC54AD222F4BBE8E00F437A4 /* AppointmentsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +401,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K887R2JX36;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -404,6 +433,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K887R2JX36;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

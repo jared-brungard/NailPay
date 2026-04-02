@@ -11,6 +11,9 @@ struct ContentView: View {
 
             ExpensesView()
                 .tabItem { Label("Expenses", systemImage: "creditcard") }
+
+            SettingsView()
+                .tabItem { Label("Settings", systemImage: "gear") }
         }
     }
 }

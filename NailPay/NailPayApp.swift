@@ -14,6 +14,6 @@ struct NailPayApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [Appointment.self, Expense.self])
+        .modelContainer(for: [Appointment.self, Expense.self, PaymentType.self, RecurringExpense.self])
     }
 }
