@@ -2,7 +2,6 @@ import SwiftUI
 import SwiftData
 
 struct PastPaychecksView: View {
-    @AppStorage("taxRate")           private var taxRate: Double = 0.25
     @AppStorage("paycheckFrequency") private var paycheckFrequency: String = "biweekly"
 
     @Query private var appointments: [Appointment]
@@ -30,7 +29,6 @@ struct PastPaychecksView: View {
                             period: period,
                             appointments: appointments,
                             expenses: expenses,
-                            taxRate: taxRate,
                             frequencyLabel: frequencyLabel
                         )
                         .navigationTitle("\(period.start, style: .date)")
@@ -38,8 +36,7 @@ struct PastPaychecksView: View {
                         PastPaycheckRow(
                             period: period,
                             appointments: appointments,
-                            expenses: expenses,
-                            taxRate: taxRate
+                            expenses: expenses
                         )
                     }
                 }
@@ -61,22 +58,40 @@ private struct PastPaycheckRow: View {
     let period: PayPeriod
     let appointments: [Appointment]
     let expenses: [Expense]
-    let taxRate: Double
+
+    private var periodAppointments: [Appointment] {
+        appointments.filter { $0.date >= period.start && $0.date <= period.end }
+    }
 
     private var grossIncome: Double {
-        appointments
-            .filter { $0.date >= period.start && $0.date <= period.end }
-            .reduce(0) { $0 + $1.total }
+        periodAppointments.reduce(0) { $0 + $1.total }
+    }
+
+    private var fees: Double {
+        periodAppointments.reduce(0) { $0 + $1.fee }
     }
 
     private var totalExpenses: Double {
         expenses
             .filter { $0.date >= period.start && $0.date <= period.end }
-            .reduce(0) { $0 + $1.amount }
+            .reduce(0) { $0 + $1.amount } + fees
+    }
+
+    private var effectiveTaxRate: Double {
+        let ytdIncome = appointments.reduce(0) { $0 + $1.total }
+        let ytdFees = appointments.reduce(0) { $0 + $1.fee }
+        let ytdExpenses = expenses.reduce(0) { $0 + $1.amount } + ytdFees
+        let estimate = TaxCalculator.calculateAnnualTaxes(
+            ytdIncome: ytdIncome,
+            ytdExpenses: ytdExpenses,
+            currentDate: Date.now
+        )
+        guard estimate.netProfit > 0 else { return 0 }
+        return min(1, estimate.totalTaxLiability / estimate.netProfit)
     }
 
     private var net: Double     { grossIncome - totalExpenses }
-    private var takeHome: Double { max(0, net) - max(0, net) * taxRate }
+    private var takeHome: Double { max(0, net) - max(0, net) * effectiveTaxRate }
 
     var body: some View {
         HStack {

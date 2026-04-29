@@ -29,6 +29,7 @@ struct PaymentTypesView: View {
             .onDelete(perform: deletePaymentTypes)
         }
         .navigationTitle("Payment Types")
+        .toolbarTitleDisplayMode(.inlineLarge)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button { showingAdd = true } label: { Image(systemName: "plus") }
@@ -54,7 +55,7 @@ struct PaymentTypesView: View {
         let defaults: [(String, String, Double, Int)] = [
             ("Cash",        "percentage", 0.0, 0),
             ("Credit Card", "percentage", 2.9, 1),
-            ("Venmo",       "percentage", 1.9, 2),
+            ("Venmo",       "percentage", 1.8, 2),
             ("Zelle",       "percentage", 0.0, 3),
             ("Check",       "flat",       0.0, 4),
         ]

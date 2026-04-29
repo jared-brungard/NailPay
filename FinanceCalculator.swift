@@ -12,8 +12,4 @@ struct FinanceCalculator {
     static func profit(income: Double, expenses: Double) -> Double {
         income - expenses
     }
-
-    static func taxSetAside(profit: Double, taxRate: Double) -> Double {
-        max(0, profit) * taxRate
-    }
 }

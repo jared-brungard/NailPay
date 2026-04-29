@@ -29,10 +29,13 @@ import SwiftData
     var dayOfMonth: Int      // monthly: 1–31
     var annualMonth: Int     // annual: 1–12
     var annualDay: Int       // annual: 1–31
+    var startDate: Date?
+    var endDate: Date?
 
     init(name: String, amount: Double, frequency: String = "monthly",
          weekday: Int = 2, dayOfMonth: Int = 1,
-         annualMonth: Int = 1, annualDay: Int = 1) {
+         annualMonth: Int = 1, annualDay: Int = 1,
+         startDate: Date? = nil, endDate: Date? = nil) {
         self.name = name
         self.amount = amount
         self.frequency = frequency
@@ -40,6 +43,8 @@ import SwiftData
         self.dayOfMonth = dayOfMonth
         self.annualMonth = annualMonth
         self.annualDay = annualDay
+        self.startDate = startDate
+        self.endDate = endDate
     }
 
     var scheduleLabel: String {

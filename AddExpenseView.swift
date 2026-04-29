@@ -34,6 +34,14 @@ struct AddExpenseView: View {
         let amount = Double(amountText) ?? 0
         let exp = Expense(date: date, category: category, amount: amount)
         modelContext.insert(exp)
+
+        do {
+            try modelContext.save()
+            print("✅ Expense saved: \(category)")
+        } catch {
+            print("❌ Failed to save expense: \(error)")
+        }
+
         dismiss()
     }
 }

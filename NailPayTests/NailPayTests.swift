@@ -20,9 +20,4 @@ final class NailPayTests: XCTestCase {
         let profit = FinanceCalculator.profit(income: 60, expenses: 12.34)
         XCTAssertEqual(profit, 47.66, accuracy: 0.0001)
     }
-
-    func testTaxSetAsideNeverNegative() {
-        let tax = FinanceCalculator.taxSetAside(profit: -100, taxRate: 0.25)
-        XCTAssertEqual(tax, 0, accuracy: 0.0001)
-    }
 }

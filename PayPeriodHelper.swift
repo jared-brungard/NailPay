@@ -1,8 +1,17 @@
 import Foundation
 
-struct PayPeriod {
+struct PayPeriod: Hashable, Equatable {
     let start: Date
     let end: Date
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(start.timeIntervalSinceReferenceDate)
+        hasher.combine(end.timeIntervalSinceReferenceDate)
+    }
+
+    static func == (lhs: PayPeriod, rhs: PayPeriod) -> Bool {
+        lhs.start == rhs.start && lhs.end == rhs.end
+    }
 }
 
 struct PayPeriodHelper {

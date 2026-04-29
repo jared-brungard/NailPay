@@ -29,16 +29,27 @@ struct RecurringExpensesView: View {
             .onDelete(perform: deleteRecurringExpenses)
         }
         .navigationTitle("Recurring Expenses")
+        .toolbarTitleDisplayMode(.inlineLarge)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button { showingAdd = true } label: { Image(systemName: "plus") }
             }
         }
         .sheet(isPresented: $showingAdd) {
-            RecurringExpenseFormView(existingExpense: nil)
+            RecurringExpenseFormView(existingExpense: nil) { newExpense in
+                RecurringExpenseHelper.processRecurringExpenses(
+                    modelContext: modelContext,
+                    recurringExpenses: [newExpense]
+                )
+            }
         }
         .sheet(item: $editingExpense) { re in
-            RecurringExpenseFormView(existingExpense: re)
+            RecurringExpenseFormView(existingExpense: re) { _ in
+                RecurringExpenseHelper.processRecurringExpenses(
+                    modelContext: modelContext,
+                    recurringExpenses: recurringExpenses
+                )
+            }
         }
     }
 
@@ -54,6 +65,7 @@ struct RecurringExpenseFormView: View {
     @Environment(\.modelContext) private var modelContext
 
     let existingExpense: RecurringExpense?
+    let onSave: ((RecurringExpense) -> Void)?
 
     @State private var name: String = ""
     @State private var amountText: String = ""
@@ -68,6 +80,11 @@ struct RecurringExpenseFormView: View {
     // Annual
     @State private var annualMonth: Int = 1
     @State private var annualDay: Int = 1
+
+    // Date range
+    @State private var startDate: Date = Date()
+    @State private var hasEndDate: Bool = false
+    @State private var endDate: Date = Date()
 
     private let frequencies = ["weekly", "monthly", "annual"]
 
@@ -157,6 +174,14 @@ struct RecurringExpenseFormView: View {
                         .frame(height: 120)
                     }
                 }
+
+                Section("Date Range") {
+                    DatePicker("Start Date", selection: $startDate, displayedComponents: .date)
+                    Toggle("Has End Date", isOn: $hasEndDate)
+                    if hasEndDate {
+                        DatePicker("End Date", selection: $endDate, displayedComponents: .date)
+                    }
+                }
             }
             .navigationTitle(existingExpense == nil ? "New Recurring Expense" : "Edit Recurring Expense")
             .toolbar {
@@ -196,6 +221,11 @@ struct RecurringExpenseFormView: View {
         dayOfMonth = re.dayOfMonth
         annualMonth = re.annualMonth
         annualDay = re.annualDay
+        startDate = re.startDate ?? Date()
+        if let endDate = re.endDate {
+            self.endDate = endDate
+            hasEndDate = true
+        }
     }
 
     private func save() {
@@ -208,12 +238,18 @@ struct RecurringExpenseFormView: View {
             re.dayOfMonth = dayOfMonth
             re.annualMonth = annualMonth
             re.annualDay = annualDay
+            re.startDate = startDate
+            re.endDate = hasEndDate ? endDate : nil
+            onSave?(re)
         } else {
-            modelContext.insert(RecurringExpense(
+            let newExpense = RecurringExpense(
                 name: name, amount: amount, frequency: frequency,
                 weekday: weekday, dayOfMonth: dayOfMonth,
-                annualMonth: annualMonth, annualDay: annualDay
-            ))
+                annualMonth: annualMonth, annualDay: annualDay,
+                startDate: startDate, endDate: hasEndDate ? endDate : nil
+            )
+            modelContext.insert(newExpense)
+            onSave?(newExpense)
         }
         dismiss()
     }

@@ -2,7 +2,6 @@ import SwiftUI
 import SwiftData
 
 struct PaycheckView: View {
-    @AppStorage("taxRate")           private var taxRate: Double = 0.25
     @AppStorage("paycheckFrequency") private var paycheckFrequency: String = "biweekly"
 
     @Query private var appointments: [Appointment]
@@ -17,10 +16,10 @@ struct PaycheckView: View {
             period: period,
             appointments: appointments,
             expenses: expenses,
-            taxRate: taxRate,
             frequencyLabel: frequencyLabel
         )
         .navigationTitle("Paycheck")
+        .toolbarTitleDisplayMode(.inlineLarge)
     }
 
     private var frequencyLabel: String {
@@ -37,7 +36,6 @@ struct PaycheckDetailView: View {
     let period: PayPeriod
     let appointments: [Appointment]
     let expenses: [Expense]
-    let taxRate: Double
     let frequencyLabel: String
 
     private var periodAppointments: [Appointment] {
@@ -49,10 +47,25 @@ struct PaycheckDetailView: View {
     }
 
     private var grossIncome: Double  { periodAppointments.reduce(0) { $0 + $1.total } }
-    private var totalExpenses: Double { periodExpenses.reduce(0) { $0 + $1.amount } }
+    private var transactionFees: Double { periodAppointments.reduce(0) { $0 + $1.fee } }
+    private var totalExpenses: Double { periodExpenses.reduce(0) { $0 + $1.amount } + transactionFees }
     private var netProfit: Double    { grossIncome - totalExpenses }
-    private var taxSetAside: Double  { max(0, netProfit) * taxRate }
-    private var takeHome: Double     { max(0, netProfit) - taxSetAside }
+
+    private var effectiveTaxRate: Double {
+        let ytdIncome = appointments.reduce(0) { $0 + $1.total }
+        let ytdFees = appointments.reduce(0) { $0 + $1.fee }
+        let ytdExpenses = expenses.reduce(0) { $0 + $1.amount } + ytdFees
+        let estimate = TaxCalculator.calculateAnnualTaxes(
+            ytdIncome: ytdIncome,
+            ytdExpenses: ytdExpenses,
+            currentDate: Date.now
+        )
+        guard estimate.netProfit > 0 else { return 0 }
+        return min(1, estimate.totalTaxLiability / estimate.netProfit)
+    }
+
+    private var taxSetAside: Double { max(0, netProfit) * effectiveTaxRate }
+    private var takeHome: Double    { max(0, netProfit) - taxSetAside }
 
     var body: some View {
         Form {
@@ -69,7 +82,8 @@ struct PaycheckDetailView: View {
 
             Section("This Period's Earnings") {
                 moneyRow("Gross Income", grossIncome)
-                moneyRow("Expenses", -totalExpenses)
+                moneyRow("Transaction Fees", -transactionFees)
+                moneyRow("Expenses", -(totalExpenses - transactionFees))
                 Divider()
                 moneyRow("Net Profit", netProfit)
                     .fontWeight(.semibold)
@@ -77,9 +91,9 @@ struct PaycheckDetailView: View {
 
             Section("Paycheck Breakdown") {
                 HStack {
-                    Text("Tax Rate")
+                    Text("Effective Tax Rate")
                     Spacer()
-                    Text("\(Int(taxRate * 100))%")
+                    Text("\(effectiveTaxRate * 100, specifier: "%.1f")%")
                         .foregroundStyle(.secondary)
                 }
                 moneyRow("Set Aside for Taxes", taxSetAside)
